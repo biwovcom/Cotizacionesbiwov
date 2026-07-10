@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contrato y Formulario — Biwov_</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,100..900;1,100..900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --navy:      #0D3B66;
+      --navy-deep: #082C4E;
+      --blue:      #1B6FA8;
+      --cyan:      #45C8DC;
+      --cyan-deep: #0C8599;
+      --bg:        #FFFFFF;
+      --bg-alt:    #F3F9FC;
+      --text:      #16324F;
+      --muted:     #64748B;
+      --border:    #E1E9F0;
+      --border-cyan: rgba(69,200,220,0.4);
+      --white:     #FFFFFF;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .underscore { color: var(--cyan); }
+
+    .logo-lockup { display: flex; align-items: baseline; gap: 0.5rem; text-decoration: none; }
+    .logo { font-family: 'MuseoModerno', sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--navy); letter-spacing: -0.5px; line-height: 1; }
+    .logo-x { color: var(--muted); font-size: 0.9rem; font-weight: 400; }
+    .logo-kd { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--cyan-deep); letter-spacing: -0.2px; }
+
+    /* NAV */
+    nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 6vw; background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav ul { list-style: none; display: flex; gap: 2.25rem; }
+    nav ul a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 600; letter-spacing: 0.01em; transition: color 0.2s; }
+    nav ul a:hover { color: var(--navy); }
+    nav ul a.active { color: var(--navy); }
+
+    .nav-btn {
+      background: var(--navy); color: var(--white); font-family: inherit; font-size: 0.875rem; font-weight: 700;
+      padding: 0.5rem 1.25rem; border-radius: 8px; border: none; cursor: pointer; text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s; display: inline-block;
+    }
+    .nav-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* HEADER */
+    .page-header { padding: 9rem 6vw 3.5rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; background: var(--bg-alt); }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 55% 60% at 85% 0%, rgba(69,200,220,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-header .breadcrumb { font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 1.5rem; position: relative; z-index: 1; }
+    .page-header h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; color: var(--navy); letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 1rem; position: relative; z-index: 1; max-width: 700px; }
+    .page-header .meta { font-size: 0.9rem; color: var(--muted); font-weight: 500; position: relative; z-index: 1; max-width: 620px; }
+    .page-header .meta span { color: var(--navy); font-weight: 700; }
+
+    /* CONTENT */
+    .content-wrap { max-width: 820px; margin: 0 auto; padding: 4rem 6vw 6rem; }
+
+    .steps-nav { display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 3.5rem; flex-wrap: wrap; }
+    .step-chip { display: flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; border-radius: 99px; font-size: 0.8rem; font-weight: 700; text-decoration: none; border: 1px solid var(--border); color: var(--muted); }
+    .step-chip.current { background: rgba(69,200,220,0.1); border-color: var(--border-cyan); color: var(--navy); }
+    .step-chip .num { width: 20px; height: 20px; border-radius: 50%; background: rgba(13,59,102,0.08); display:flex; align-items:center; justify-content:center; font-size: 0.68rem; color: var(--navy); }
+    .step-chip.current .num { background: var(--cyan); color: var(--navy); }
+    .step-chip:hover:not(.current) { color: var(--navy); }
+
+    /* TOC */
+    .toc { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem 2rem; margin-bottom: 3rem; }
+    .toc h4 { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan-deep); margin-bottom: 1.1rem; }
+    .toc ol { list-style: none; counter-reset: toc; display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 2rem; }
+    .toc ol li { counter-increment: toc; font-size: 0.85rem; }
+    .toc ol li::before { content: counter(toc) ". "; color: var(--blue); font-weight: 700; }
+    .toc ol a { color: var(--text); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .toc ol a:hover { color: var(--navy); }
+
+    /* SECTIONS */
+    .t-section { margin-bottom: 3rem; scroll-margin-top: 5rem; }
+    .t-section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.1rem; padding-bottom: 0.9rem; border-bottom: 1px solid var(--border); }
+    .t-num { width: 34px; height: 34px; min-width: 34px; border-radius: 50%; background: rgba(69,200,220,0.12); border: 1px solid var(--border-cyan); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 800; color: var(--navy); }
+    .t-section h2 { font-size: 1.1rem; font-weight: 800; color: var(--navy); letter-spacing: -0.3px; }
+    .t-section p { font-size: 0.87rem; color: var(--text); font-weight: 500; line-height: 1.7; margin-bottom: 0.85rem; }
+    .t-section p:last-child { margin-bottom: 0; }
+    .t-list { list-style: none; margin: 0.6rem 0 0.9rem; }
+    .t-list li { position: relative; font-size: 0.85rem; color: var(--text); font-weight: 500; line-height: 1.6; padding: 0.45rem 0 0.45rem 1.3rem; border-bottom: 1px solid var(--border); }
+    .t-list li:last-child { border-bottom: none; }
+    .t-list li::before { content: '—'; color: var(--blue); font-weight: 700; position: absolute; left: 0; top: 0.45rem; }
+
+    .note-box { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.4rem; margin: 1rem 0; font-size: 0.85rem; color: var(--text); font-weight: 500; line-height: 1.65; }
+    .note-box strong { color: var(--navy); }
+
+    /* ACCEPT + FORM */
+    .accept-block { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 18px; padding: 2rem 2.25rem; margin-top: 1rem; }
+    .accept-block h2 { font-size: 1.15rem; font-weight: 800; color: var(--navy); margin-bottom: 1.5rem; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin-bottom: 1.1rem; }
+    .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label { font-size: 0.78rem; font-weight: 700; color: var(--muted); }
+    .form-field input, .form-field select, .form-field textarea {
+      font-family: inherit; font-size: 0.9rem; color: var(--navy);
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.7rem 0.9rem; outline: none; transition: border-color 0.2s;
+    }
+    .form-field input::placeholder, .form-field textarea::placeholder { color: #9CADC0; }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--cyan); }
+    .form-field select option { background: var(--white); color: var(--navy); }
+    .form-field textarea { resize: vertical; min-height: 90px; }
+
+    .phone-group { display: flex; gap: 0.5rem; }
+    .phone-group select { flex: 0 0 auto; width: 6.5rem; padding-left: 0.6rem; padding-right: 0.3rem; }
+    .phone-group input { flex: 1 1 auto; min-width: 0; }
+
+    .calc-summary {
+      background: rgba(69,200,220,0.08); border: 1px solid var(--border-cyan); border-radius: 10px;
+      padding: 1rem 1.2rem; margin-bottom: 1.1rem; font-size: 0.82rem; color: var(--text); line-height: 1.6;
+    }
+    .calc-summary strong { color: var(--cyan-deep); }
+
+    .checkbox-row { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.85rem 0; border-top: 1px solid var(--border); }
+    .checkbox-row input[type="checkbox"] { margin-top: 3px; width: 17px; height: 17px; accent-color: var(--cyan-deep); cursor: pointer; flex-shrink: 0; }
+    .checkbox-row label { font-size: 0.85rem; color: var(--text); font-weight: 500; line-height: 1.55; cursor: pointer; }
+    .checkbox-row label a { color: var(--cyan-deep); text-decoration: none; font-weight: 700; }
+    .checkbox-row label a:hover { text-decoration: underline; }
+
+    .submit-btn {
+      width: 100%; margin-top: 1.5rem; background: var(--navy); color: var(--white); font-family: inherit;
+      font-size: 0.95rem; font-weight: 800; padding: 0.95rem; border-radius: 10px; border: none; cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .submit-btn:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
+    .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .form-msg { margin-top: 1rem; font-size: 0.85rem; font-weight: 600; padding: 0.85rem 1.1rem; border-radius: 10px; display: none; }
+    .form-msg.show { display: block; }
+    .form-msg.success { background: rgba(16,163,127,0.08); border: 1px solid rgba(16,163,127,0.35); color: #0E8A6E; }
+    .form-msg.error { background: rgba(220,80,80,0.08); border: 1px solid rgba(220,80,80,0.35); color: #C23B3B; }
+
+    /* FOOTER */
+    footer { background: var(--navy-deep); border-top: 1px solid var(--border); padding: 2.25rem 6vw; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    footer .logo, footer .logo-x { color: var(--white); }
+    footer .logo-kd { color: var(--cyan); }
+    footer small { font-size: 0.8rem; color: #A9C2D8; font-weight: 500; }
+    .f-links { display: flex; gap: 1.75rem; list-style: none; flex-wrap: wrap; }
+    .f-links a { font-size: 0.8rem; font-weight: 600; color: #A9C2D8; text-decoration: none; transition: color 0.2s; }
+    .f-links a:hover { color: var(--white); }
+
+    /* HAMBURGER */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-menu {
+      display: none; position: fixed; top: 62px; left: 0; right: 0; background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(16px); padding: 1.5rem 6%; border-bottom: 1px solid var(--border);
+      z-index: 99; flex-direction: column; gap: 0.25rem; box-shadow: 0 12px 24px rgba(13,59,102,0.08);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); text-decoration: none; padding: 0.75rem 0; border-bottom: 1px solid var(--border); transition: color 0.2s; }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--navy); }
+
+    /* WHATSAPP FLOAT */
+    .whatsapp-float {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 150;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #25D366; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.28); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .whatsapp-float:hover { transform: scale(1.08); box-shadow: 0 8px 26px rgba(0,0,0,0.32); }
+    .whatsapp-float svg { width: 28px; height: 28px; fill: #ffffff; }
+
+    @media (max-width: 768px) {
+      .content-wrap { padding: 3rem 5% 5rem; }
+      .t-section h2 { font-size: 1rem; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 4vw; }
+      .logo-x, .logo-kd { display: none; }
+      .nav-btn { display: none; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      footer { flex-direction: column; text-align: center; }
+      .toc ol { grid-template-columns: 1fr; }
+      .page-header { padding: 8rem 5% 3rem; }
+      .content-wrap { padding: 2.5rem 4% 4rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .accept-block { padding: 1.5rem; }
+      .steps-nav { gap: 0.5rem; }
+      .step-chip { font-size: 0.72rem; padding: 0.45rem 0.85rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="propuesta.html" class="logo-lockup">
+    <span class="logo">biwov_</span><span class="logo-x">×</span><span class="logo-kd">Kathe Digital</span>
+  </a>
+  <ul>
+    <li><a href="propuesta.html">Planes y Precios</a></li>
+    <li><a href="calculadora.html">Calculadora</a></li>
+    <li><a href="contrato.html" class="active">Contrato y Formulario</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <a href="https://api.whatsapp.com/send/?phone=573133125157&text=Hola%2C+tengo+una+duda+sobre+el+contrato&type=phone_number&app_absent=0" target="_blank" class="nav-btn">Hablemos_</a>
+    <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="propuesta.html">Planes y Precios</a>
+  <a href="calculadora.html">Calculadora</a>
+  <a href="contrato.html">Contrato y Formulario</a>
+  <a href="https://api.whatsapp.com/send/?phone=573133125157&text=Hola%2C+tengo+una+duda+sobre+el+contrato&type=phone_number&app_absent=0" target="_blank" style="color:var(--cyan-deep);">Hablemos por WhatsApp</a>
+</div>
+
+<script>
+  const ham = document.getElementById('hamburger');
+  const mob = document.getElementById('mobile-menu');
+  ham.addEventListener('click', () => { ham.classList.toggle('open'); mob.classList.toggle('open'); });
+</script>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="breadcrumb">Biwov_ › Contrato y Formulario</div>
+  <h1>Términos, Contrato<br>y Confirmación<span class="underscore">_</span></h1>
+  <p class="meta">Lee las condiciones del servicio y <span>envía tu formulario</span> para dar inicio al proyecto.</p>
+</div>
+
+<!-- CONTENIDO -->
+<div class="content-wrap">
+
+  <div class="steps-nav">
+    <a href="propuesta.html" class="step-chip"><span class="num">1</span> Planes y precios</a>
+    <a href="calculadora.html" class="step-chip"><span class="num">2</span> Calculadora personalizada</a>
+    <span class="step-chip current"><span class="num">3</span> Contrato y formulario</span>
+  </div>
+
+  <!-- INDICE -->
+  <div class="toc">
+    <h4>Contenido</h4>
+    <ol>
+      <li><a href="#s1">Objeto del servicio</a></li>
+      <li><a href="#s2">Vigencia y permanencia</a></li>
+      <li><a href="#s3">Forma de pago</a></li>
+      <li><a href="#s4">Entregables y alcance</a></li>
+      <li><a href="#s5">Responsabilidades del cliente</a></li>
+      <li><a href="#s6">Responsabilidades del equipo</a></li>
+      <li><a href="#s7">Propiedad intelectual</a></li>
+      <li><a href="#s8">Confidencialidad</a></li>
+      <li><a href="#s9">Cancelación y terminación</a></li>
+      <li><a href="#s10">Garantías y responsabilidad</a></li>
+      <li><a href="#s11">Aceptación electrónica</a></li>
+    </ol>
+  </div>
+
+  <!-- 1 -->
+  <div class="t-section" id="s1">
+    <div class="t-section-header"><div class="t-num">1</div><h2>Objeto del servicio</h2></div>
+    <p>Este documento regula la prestación del servicio de gestión de redes sociales y/o desarrollo web ofrecido por <strong style="color:var(--navy);">Biwov_</strong> (en adelante "el equipo") a favor de la persona natural o jurídica que diligencia y envía el formulario de esta página (en adelante "el cliente").</p>
+    <p>El alcance específico del servicio corresponde al plan o proyecto seleccionado por el cliente en la Propuesta de Servicios y/o la Calculadora de Proyecto, e indicado en el formulario de esta página.</p>
+  </div>
+
+  <!-- 2 -->
+  <div class="t-section" id="s2">
+    <div class="t-section-header"><div class="t-num">2</div><h2>Vigencia y permanencia</h2></div>
+    <ul class="t-list">
+      <li>Los planes mensuales tienen una permanencia mínima sugerida de <strong style="color:var(--navy);">3 meses</strong>, dado que los resultados de redes sociales se hacen evidentes a partir del 2º-3er mes de gestión.</li>
+      <li>El contrato se renueva automáticamente mes a mes, salvo notificación de cancelación con al menos <strong style="color:var(--navy);">15 días calendario</strong> de anticipación al inicio del siguiente periodo.</li>
+      <li>Los proyectos de pago único (creación/optimización de redes, página web) se consideran finalizados una vez entregado el trabajo y superado el período de garantía.</li>
+    </ul>
+  </div>
+
+  <!-- 3 -->
+  <div class="t-section" id="s3">
+    <div class="t-section-header"><div class="t-num">3</div><h2>Forma de pago</h2></div>
+    <ul class="t-list">
+      <li>Cada plan o ítem cuenta con un <strong style="color:var(--navy);">enlace de pago</strong> propio, disponible en la Propuesta de Servicios y/o la Calculadora de Proyecto. El pago se realiza directamente a través de ese enlace.</li>
+      <li>Planes mensuales: pago anticipado a través del enlace de pago dentro de los primeros <strong style="color:var(--navy);">5 días</strong> de cada mes.</li>
+      <li>Proyectos de montaje (redes / web): el enlace de pago puede dividirse en un primer pago para iniciar el proyecto y un segundo pago contra entrega, según se indique en cada caso.</li>
+      <li>El no pago oportuno de la mensualidad faculta al equipo para suspender el servicio hasta regularizar el pago.</li>
+      <li>Los precios <strong style="color:var(--navy);">no incluyen IVA ni retenciones</strong>; estos corren por cuenta del cliente cuando apliquen.</li>
+      <li>Los precios son válidos mientras estén publicados en la Propuesta de Servicios y/o la Calculadora de Proyecto, y pueden actualizarse con el tiempo. Una vez contratado un plan, el precio queda <strong style="color:var(--navy);">fijo</strong> para ese cliente durante la vigencia del contrato.</li>
+    </ul>
+  </div>
+
+  <!-- 4 -->
+  <div class="t-section" id="s4">
+    <div class="t-section-header"><div class="t-num">4</div><h2>Entregables y alcance</h2></div>
+    <ul class="t-list">
+      <li>Los entregables, cantidades y periodicidad corresponden exactamente a lo descrito en el plan o la selección aceptada por el cliente.</li>
+      <li>Plan Inicial: los 2 videos mensuales se graban en una sola sesión de grabación.</li>
+      <li>Plan Crecimiento: los 4 videos mensuales se graban en 2 días de grabación al mes.</li>
+      <li>Plan Elite: los 8 videos mensuales se graban en 3 días de grabación al mes.</li>
+      <li>Cada video tiene un tiempo de entrega (edición) de 2 días hábiles a partir de su grabación.</li>
+      <li>Página web: el tiempo de entrega es de 8 a 15 días hábiles según la complejidad del proyecto y las solicitudes de cambio, con 1 mes de garantía a partir de la entrega final.</li>
+      <li>Las reuniones de seguimiento y las asesorías tienen una duración de 1 hora cada una. El acompañamiento se brinda de forma continua durante la vigencia del plan contratado.</li>
+      <li>Cualquier pieza o servicio adicional no contemplado en el plan contratado se cotiza y factura por separado.</li>
+      <li>Los tiempos de entrega se cuentan en días hábiles a partir de la recepción completa de la información y materiales solicitados al cliente.</li>
+    </ul>
+    <div class="note-box"><strong>Política de no acumulación:</strong> los videos e imágenes del mes no son acumulables al mes siguiente. Si el cliente no tiene disponibilidad para las sesiones de grabación programadas y no se llega a un nuevo acuerdo de fecha dentro del mismo mes, o si no entrega a tiempo la información necesaria para producir una pieza, esa pieza se pierde y no se traslada a periodos posteriores.</div>
+  </div>
+
+  <!-- 5 -->
+  <div class="t-section" id="s5">
+    <div class="t-section-header"><div class="t-num">5</div><h2>Responsabilidades del cliente</h2></div>
+    <ul class="t-list">
+      <li>Suministrar oportunamente la información, textos, imágenes, accesos y demás materiales necesarios para ejecutar el servicio.</li>
+      <li>Revisar y aprobar (o solicitar ajustes a) el contenido dentro de los tiempos acordados.</li>
+      <li>Contar con las cuentas de redes sociales activas, o autorizar su creación por parte del equipo.</li>
+      <li>Asumir los costos de terceros no incluidos en el plan (dominio, pauta publicitaria paga a las plataformas, licencias, etc.).</li>
+    </ul>
+  </div>
+
+  <!-- 6 -->
+  <div class="t-section" id="s6">
+    <div class="t-section-header"><div class="t-num">6</div><h2>Responsabilidades del equipo</h2></div>
+    <ul class="t-list">
+      <li>Ejecutar el servicio contratado con profesionalismo, dentro de los tiempos y estándares de calidad ofrecidos.</li>
+      <li>Mantener comunicación activa con el cliente sobre avances, entregas y reuniones de seguimiento.</li>
+      <li>Entregar reportes o resúmenes del trabajo realizado según la periodicidad del plan.</li>
+    </ul>
+  </div>
+
+  <!-- 7 -->
+  <div class="t-section" id="s7">
+    <div class="t-section-header"><div class="t-num">7</div><h2>Propiedad intelectual</h2></div>
+    <ul class="t-list">
+      <li>Una vez pagado en su totalidad, el contenido creado específicamente para el cliente (piezas, videos, textos, diseño web) es de su propiedad.</li>
+      <li>El equipo puede utilizar el trabajo realizado (con autorización del cliente) como parte de su portafolio y casos de éxito.</li>
+      <li>Recursos genéricos (plantillas, música libre de derechos, bancos de imágenes) se rigen por las licencias de sus proveedores originales.</li>
+    </ul>
+  </div>
+
+  <!-- 8 -->
+  <div class="t-section" id="s8">
+    <div class="t-section-header"><div class="t-num">8</div><h2>Confidencialidad</h2></div>
+    <p>Ambas partes se comprometen a mantener bajo reserva la información comercial, financiera o estratégica compartida durante la ejecución del servicio, y a no divulgarla a terceros sin autorización previa.</p>
+  </div>
+
+  <!-- 9 -->
+  <div class="t-section" id="s9">
+    <div class="t-section-header"><div class="t-num">9</div><h2>Cancelación y terminación</h2></div>
+    <ul class="t-list">
+      <li>El cliente puede cancelar el plan mensual notificando con mínimo 15 días calendario de anticipación; el servicio se presta hasta el final del periodo ya pagado.</li>
+      <li>Si el cliente cancela un proyecto de montaje después de iniciado, el primer pago realizado no es reembolsable, al corresponder a trabajo ya iniciado.</li>
+      <li>El equipo puede dar por terminado el contrato ante incumplimientos reiterados de pago o de las responsabilidades del cliente, previo aviso.</li>
+    </ul>
+  </div>
+
+  <!-- 10 -->
+  <div class="t-section" id="s10">
+    <div class="t-section-header"><div class="t-num">10</div><h2>Garantías y responsabilidad</h2></div>
+    <ul class="t-list">
+      <li>Se ofrece garantía de ajustes menores sobre los entregables dentro de los 8 días calendario posteriores a cada entrega, excepto en páginas web, que cuentan con 1 mes de garantía a partir de la entrega final.</li>
+      <li>El equipo no garantiza resultados específicos de ventas, tráfico o posicionamiento: los entregables son herramientas de trabajo y los resultados dependen de factores externos (mercado, competencia, inversión en pauta, etc.).</li>
+      <li>El equipo no se hace responsable por fallas de plataformas de terceros (Meta, TikTok, Google, hosting) ajenas a su control.</li>
+    </ul>
+    <div class="note-box"><strong>¿Dudas antes de aceptar?</strong> Escríbenos por WhatsApp al <a href="https://api.whatsapp.com/send/?phone=573133125157&text=Hola%2C+tengo+una+duda+sobre+el+contrato&type=phone_number&app_absent=0" target="_blank" style="color:var(--cyan-deep); font-weight:700;">+57 313 312 5157</a>.</div>
+  </div>
+
+  <!-- 11 -->
+  <div class="t-section" id="s11">
+    <div class="t-section-header"><div class="t-num">11</div><h2>Aceptación electrónica</h2></div>
+    <p>Al marcar las casillas de aceptación y enviar el formulario de esta página, el cliente declara haber leído, entendido y aceptado los presentes Términos y Condiciones y el Contrato de Prestación de Servicios, con la misma validez de una firma manuscrita, de conformidad con la Ley 527 de 1999 de la República de Colombia sobre comercio electrónico.</p>
+  </div>
+
+  <!-- FORMULARIO -->
+  <div class="accept-block" id="formulario">
+    <h2>Confirma tus datos y acepta para iniciar<span class="underscore">_</span></h2>
+
+    <form id="cotizacion-form" novalidate>
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="nombre">Nombre completo *</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+        </div>
+        <div class="form-field">
+          <label for="negocio">Nombre del negocio *</label>
+          <input type="text" id="negocio" name="negocio" placeholder="Nombre de tu marca o empresa" required>
+        </div>
+        <div class="form-field">
+          <label for="email">Correo electrónico *</label>
+          <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" required>
+        </div>
+        <div class="form-field">
+          <label for="telefono">Teléfono / WhatsApp *</label>
+          <div class="phone-group">
+            <select id="tel-pais" aria-label="Indicativo del país"></select>
+            <input type="tel" id="telefono" name="telefono" placeholder="300 000 0000" required>
+          </div>
+        </div>
+        <div class="form-field full">
+          <label for="plan">Plan de interés *</label>
+          <select id="plan" name="plan" required>
+            <option value="" disabled selected>Selecciona un plan</option>
+            <option value="Plan Inicial">Plan Inicial — $750.000 COP/mes</option>
+            <option value="Plan Crecimiento">Plan Crecimiento — $1.420.000 COP/mes</option>
+            <option value="Plan Elite">Plan Elite — $1.690.000 COP/mes</option>
+            <option value="Pago Único">Pago Único — Montaje inicial</option>
+            <option value="Personalizado">Personalizado (calculadora)</option>
+          </select>
+        </div>
+        <div class="form-field full" id="calc-summary-wrap" style="display:none;">
+          <div class="calc-summary" id="calc-summary"></div>
+        </div>
+        <div class="form-field full">
+          <label for="comentarios">Comentarios adicionales</label>
+          <textarea id="comentarios" name="comentarios" placeholder="Cuéntanos algo más sobre tu negocio o tu proyecto (opcional)"></textarea>
+        </div>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="accept-terminos" required>
+        <label for="accept-terminos">He leído y acepto los <a href="#s1">Términos y Condiciones</a> del servicio (secciones 1 a 10).</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="accept-contrato" required>
+        <label for="accept-contrato">Acepto el <a href="#s11">Contrato de Prestación de Servicios</a> y autorizo su firma electrónica.</label>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn" disabled>Enviar y confirmar_</button>
+      <div class="form-msg" id="form-msg"></div>
+    </form>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="propuesta.html" class="logo-lockup"><span class="logo">biwov_</span><span class="logo-x">×</span><span class="logo-kd">Kathe Digital</span></a>
+  <small>© 2026 Biwov_. Colombia</small>
+  <ul class="f-links">
+    <li><a href="propuesta.html">Planes y Precios</a></li>
+    <li><a href="calculadora.html">Calculadora</a></li>
+    <li><a href="contrato.html">Contrato y Formulario</a></li>
+    <li><a href="https://api.whatsapp.com/send/?phone=573133125157&text=Hola%2C+tengo+una+duda+sobre+el+contrato&type=phone_number&app_absent=0" target="_blank">WhatsApp</a></li>
+  </ul>
+</footer>
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://api.whatsapp.com/send/?phone=573133125157&text=Hola%2C+tengo+una+duda+sobre+el+contrato&type=phone_number&app_absent=0" target="_blank" class="whatsapp-float" aria-label="Escríbenos por WhatsApp">
+  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16.04 2.67C8.85 2.67 3.02 8.5 3.02 15.69c0 2.28.6 4.5 1.73 6.46L2.9 29.33l7.35-1.93a13.02 13.02 0 0 0 5.78 1.36h.01c7.19 0 13.02-5.83 13.02-13.02 0-3.48-1.36-6.75-3.82-9.2a12.93 12.93 0 0 0-9.2-3.87zm0 23.83h-.01a10.8 10.8 0 0 1-5.5-1.51l-.4-.24-4.36 1.14 1.16-4.25-.26-.44a10.78 10.78 0 0 1-1.66-5.76c0-5.96 4.85-10.81 10.82-10.81 2.89 0 5.6 1.13 7.65 3.17a10.74 10.74 0 0 1 3.16 7.65c0 5.96-4.85 10.81-10.6 10.81zm5.93-8.1c-.32-.16-1.9-.94-2.2-1.05-.29-.11-.51-.16-.72.16-.21.32-.83 1.05-1.02 1.26-.19.21-.38.24-.7.08-.32-.16-1.36-.5-2.6-1.6-.96-.86-1.6-1.92-1.79-2.24-.19-.32-.02-.49.14-.65.14-.14.32-.38.48-.56.16-.19.21-.32.32-.54.11-.21.05-.4-.03-.56-.08-.16-.72-1.74-.99-2.38-.26-.62-.53-.54-.72-.55h-.62c-.21 0-.56.08-.85.4-.29.32-1.11 1.08-1.11 2.64 0 1.56 1.14 3.06 1.3 3.27.16.21 2.24 3.42 5.43 4.8.76.33 1.35.52 1.81.67.76.24 1.45.21 2 .13.61-.09 1.9-.78 2.17-1.53.27-.75.27-1.4.19-1.53-.08-.13-.29-.21-.61-.37z"/></svg>
+</a>
+
+<!--
+  ══════════════════════════════════════════════════════════════════
+  INTEGRACIÓN CON SUPABASE
+  ══════════════════════════════════════════════════════════════════
+  1. Reemplaza SUPABASE_URL y SUPABASE_ANON_KEY abajo con los valores
+     de tu proyecto (Project Settings → API en supabase.com).
+  2. Crea en Supabase una tabla llamada "solicitudes_cotizacion" con
+     estas columnas (o ajusta los nombres en el objeto "payload"):
+       nombre            text
+       negocio           text
+       email             text
+       telefono          text
+       plan              text
+       detalle_calculadora  text
+       total_mensual_calc   numeric
+       total_unico_calc     numeric
+       comentarios       text
+       acepto_terminos   boolean
+       acepto_contrato   boolean
+       creado_en         timestamptz  (default now())
+  3. Activa Row Level Security con una policy de INSERT pública para
+     esta tabla si vas a insertar directamente desde el navegador.
+  ══════════════════════════════════════════════════════════════════
+-->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  const SUPABASE_URL = 'TU_SUPABASE_URL_AQUI';
+  const SUPABASE_ANON_KEY = 'TU_SUPABASE_ANON_KEY_AQUI';
+  const SUPABASE_TABLE = 'solicitudes_cotizacion';
+
+  let supabaseClient = null;
+  if (window.supabase && !SUPABASE_URL.includes('TU_SUPABASE')) {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+
+  // Enlaces de pago por plan (Hotmart) — se abren automáticamente al confirmar el formulario
+  const PAYMENT_LINKS = {
+    'Plan Inicial': 'https://pay.hotmart.com/S106690825B?bid=1783717965547',
+    'Plan Crecimiento': 'https://pay.hotmart.com/F106692660M?bid=1783718265466',
+    'Plan Elite': 'https://pay.hotmart.com/L106692804C?bid=1783718721666',
+  };
+
+  // Indicativos de país para el teléfono / WhatsApp
+  const COUNTRY_CODES = [
+    { code: '57',  name: 'Colombia',            flag: '🇨🇴' },
+    { code: '52',  name: 'México',              flag: '🇲🇽' },
+    { code: '1',   name: 'Estados Unidos',      flag: '🇺🇸' },
+    { code: '1',   name: 'Canadá',              flag: '🇨🇦' },
+    { code: '34',  name: 'España',              flag: '🇪🇸' },
+    { code: '54',  name: 'Argentina',           flag: '🇦🇷' },
+    { code: '56',  name: 'Chile',               flag: '🇨🇱' },
+    { code: '51',  name: 'Perú',                flag: '🇵🇪' },
+    { code: '593', name: 'Ecuador',             flag: '🇪🇨' },
+    { code: '58',  name: 'Venezuela',           flag: '🇻🇪' },
+    { code: '507', name: 'Panamá',              flag: '🇵🇦' },
+    { code: '506', name: 'Costa Rica',          flag: '🇨🇷' },
+    { code: '502', name: 'Guatemala',           flag: '🇬🇹' },
+    { code: '503', name: 'El Salvador',         flag: '🇸🇻' },
+    { code: '504', name: 'Honduras',            flag: '🇭🇳' },
+    { code: '505', name: 'Nicaragua',           flag: '🇳🇮' },
+    { code: '591', name: 'Bolivia',             flag: '🇧🇴' },
+    { code: '595', name: 'Paraguay',            flag: '🇵🇾' },
+    { code: '598', name: 'Uruguay',             flag: '🇺🇾' },
+    { code: '1',   name: 'República Dominicana',flag: '🇩🇴' },
+    { code: '53',  name: 'Cuba',                flag: '🇨🇺' },
+    { code: '55',  name: 'Brasil',              flag: '🇧🇷' },
+    { code: '44',  name: 'Reino Unido',         flag: '🇬🇧' },
+    { code: '33',  name: 'Francia',             flag: '🇫🇷' },
+    { code: '49',  name: 'Alemania',            flag: '🇩🇪' },
+    { code: '39',  name: 'Italia',              flag: '🇮🇹' },
+    { code: '351', name: 'Portugal',            flag: '🇵🇹' },
+  ];
+
+  const telPaisSelect = document.getElementById('tel-pais');
+  COUNTRY_CODES.forEach((c, i) => {
+    const opt = document.createElement('option');
+    opt.value = c.code;
+    opt.textContent = `${c.flag} +${c.code}`;
+    opt.title = c.name;
+    if (i === 0) opt.selected = true;
+    telPaisSelect.appendChild(opt);
+  });
+
+  // Prefill desde la propuesta o la calculadora (?plan=...&mensual=...&unico=...&detalle=...)
+  const params = new URLSearchParams(window.location.search);
+  const planParam = params.get('plan');
+  const mensualParam = params.get('mensual');
+  const unicoParam = params.get('unico');
+  const detalleParam = params.get('detalle');
+
+  if (planParam) {
+    const planSelect = document.getElementById('plan');
+    const match = [...planSelect.options].find(o => o.value === planParam);
+    if (match) planSelect.value = planParam;
+  }
+
+  if (planParam === 'Personalizado' && (mensualParam || unicoParam)) {
+    const wrap = document.getElementById('calc-summary-wrap');
+    const box = document.getElementById('calc-summary');
+    const fmt = n => '$' + Math.round(Number(n) || 0).toLocaleString('es-CO');
+    box.innerHTML = `<strong>Resumen de tu calculadora:</strong><br>
+      Mensual estimado: ${fmt(mensualParam)} COP/mes · Pago único estimado: ${fmt(unicoParam)} COP
+      ${detalleParam ? '<br>Detalle: ' + detalleParam : ''}`;
+    wrap.style.display = 'block';
+  }
+
+  // Habilitar el botón de enviar solo si ambas casillas están marcadas
+  const termCheck = document.getElementById('accept-terminos');
+  const contractCheck = document.getElementById('accept-contrato');
+  const submitBtn = document.getElementById('submit-btn');
+  function refreshSubmit() {
+    submitBtn.disabled = !(termCheck.checked && contractCheck.checked);
+  }
+  termCheck.addEventListener('change', refreshSubmit);
+  contractCheck.addEventListener('change', refreshSubmit);
+
+  const form = document.getElementById('cotizacion-form');
+  const msg = document.getElementById('form-msg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+    msg.className = 'form-msg';
+
+    const selectedPlan = document.getElementById('plan').value;
+    const telefonoCompleto = `+${telPaisSelect.value} ${document.getElementById('telefono').value.trim()}`;
+
+    const payload = {
+      nombre: document.getElementById('nombre').value.trim(),
+      negocio: document.getElementById('negocio').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      telefono: telefonoCompleto,
+      plan: selectedPlan,
+      detalle_calculadora: detalleParam || null,
+      total_mensual_calc: mensualParam ? Number(mensualParam) : null,
+      total_unico_calc: unicoParam ? Number(unicoParam) : null,
+      comentarios: document.getElementById('comentarios').value.trim(),
+      acepto_terminos: termCheck.checked,
+      acepto_contrato: contractCheck.checked,
+    };
+
+    // Guardar en Supabase (best-effort): si falla, no bloquea el paso al pago.
+    let saveError = null;
+    try {
+      if (!supabaseClient) {
+        throw new Error('Supabase no está configurado todavía.');
+      }
+      const { error } = await supabaseClient.from(SUPABASE_TABLE).insert([payload]);
+      if (error) throw error;
+    } catch (err) {
+      saveError = err;
+      console.warn('No se pudo guardar en Supabase:', err.message);
+    }
+
+    const paymentLink = PAYMENT_LINKS[selectedPlan];
+
+    if (paymentLink) {
+      msg.textContent = '¡Listo! Te estamos redirigiendo a la pasarela de pago...';
+      msg.classList.add('show', 'success');
+      submitBtn.textContent = 'Redirigiendo...';
+      setTimeout(() => { window.location.href = paymentLink; }, 1200);
+    } else {
+      msg.textContent = saveError
+        ? '¡Listo! Anota tu información: te contactaremos por WhatsApp o correo para coordinar el pago.'
+        : '¡Listo! Recibimos tu información. Te contactaremos muy pronto por WhatsApp o correo para coordinar el pago.';
+      msg.classList.add('show', 'success');
+      form.reset();
+      document.getElementById('calc-summary-wrap').style.display = 'none';
+      submitBtn.textContent = 'Enviado ✓';
+    }
+  });
+</script>
+
+</body>
+</html>

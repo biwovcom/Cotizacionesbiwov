@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Proyecto — Biwov_</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,100..900;1,100..900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --navy:      #0D3B66;
+      --navy-deep: #082C4E;
+      --blue:      #1B6FA8;
+      --cyan:      #45C8DC;
+      --cyan-deep: #0C8599;
+      --bg:        #FFFFFF;
+      --bg-alt:    #F3F9FC;
+      --text:      #16324F;
+      --muted:     #64748B;
+      --border:    #E1E9F0;
+      --border-cyan: rgba(69,200,220,0.4);
+      --white:     #FFFFFF;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .underscore { color: var(--cyan); }
+
+    .logo-lockup { display: flex; align-items: baseline; gap: 0.5rem; text-decoration: none; }
+    .logo { font-family: 'MuseoModerno', sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--navy); letter-spacing: -0.5px; line-height: 1; }
+    .logo-x { color: var(--muted); font-size: 0.9rem; font-weight: 400; }
+    .logo-kd { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--cyan-deep); letter-spacing: -0.2px; }
+
+    /* NAV */
+    nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 6vw; background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav ul { list-style: none; display: flex; gap: 2.25rem; }
+    nav ul a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 600; letter-spacing: 0.01em; transition: color 0.2s; }
+    nav ul a:hover { color: var(--navy); }
+    nav ul a.active { color: var(--navy); }
+
+    .nav-btn {
+      background: var(--navy); color: var(--white); font-family: inherit; font-size: 0.875rem; font-weight: 700;
+      padding: 0.5rem 1.25rem; border-radius: 8px; border: none; cursor: pointer; text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s; display: inline-block;
+    }
+    .nav-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* HEADER */
+    .page-header { padding: 9rem 6vw 3.5rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; background: var(--bg-alt); }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 55% 60% at 85% 0%, rgba(69,200,220,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-header .breadcrumb { font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 1.5rem; position: relative; z-index: 1; }
+    .page-header h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; color: var(--navy); letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 1rem; position: relative; z-index: 1; max-width: 700px; }
+    .page-header .meta { font-size: 0.9rem; color: var(--muted); font-weight: 500; position: relative; z-index: 1; max-width: 620px; }
+    .page-header .meta span { color: var(--navy); font-weight: 700; }
+
+    /* CONTENT */
+    .content-wrap { max-width: 980px; margin: 0 auto; padding: 4rem 6vw 6rem; }
+
+    .steps-nav { display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 3.5rem; flex-wrap: wrap; }
+    .step-chip { display: flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; border-radius: 99px; font-size: 0.8rem; font-weight: 700; text-decoration: none; border: 1px solid var(--border); color: var(--muted); }
+    .step-chip.current { background: rgba(69,200,220,0.1); border-color: var(--border-cyan); color: var(--navy); }
+    .step-chip .num { width: 20px; height: 20px; border-radius: 50%; background: rgba(13,59,102,0.08); display:flex; align-items:center; justify-content:center; font-size: 0.68rem; color: var(--navy); }
+    .step-chip.current .num { background: var(--cyan); color: var(--navy); }
+    .step-chip:hover:not(.current) { color: var(--navy); }
+
+    .section-lead { max-width: 680px; margin: 0 auto 3rem; text-align: center; color: var(--text); font-size: 0.95rem; font-weight: 500; }
+
+    /* CALC SECTIONS */
+    .calc-section { margin-bottom: 2.5rem; }
+    .calc-section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+    .calc-section-header h2 { font-size: 1rem; font-weight: 800; color: var(--navy); }
+    .calc-section-header .tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+    .calc-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .calc-row:last-child { border-bottom: none; }
+    .calc-row .item-name { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+    .calc-row .item-price { font-size: 0.78rem; color: var(--muted); font-weight: 500; white-space: nowrap; }
+
+    .qty-control { display: flex; align-items: center; gap: 0.4rem; }
+    .qty-btn {
+      width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--border);
+      background: var(--bg-alt); color: var(--navy); font-size: 1rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1;
+    }
+    .qty-btn:hover { background: rgba(69,200,220,0.15); }
+    .qty-input {
+      width: 42px; text-align: center; background: var(--white); border: 1px solid var(--border);
+      border-radius: 6px; color: var(--navy); font-family: inherit; font-size: 0.85rem; font-weight: 700; padding: 0.3rem 0;
+    }
+    .qty-input::-webkit-inner-spin-button, .qty-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+    .row-subtotal { font-size: 0.85rem; font-weight: 700; color: var(--navy); min-width: 88px; text-align: right; }
+
+    /* SUMMARY */
+    .summary-box {
+      position: sticky;
+      bottom: 0.75rem;
+      margin-top: 2rem;
+      background: var(--navy);
+      border: 1px solid var(--border-cyan);
+      border-radius: 14px;
+      padding: 0.75rem 1.1rem;
+      box-shadow: 0 8px 28px rgba(13,59,102,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .summary-grid { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .summary-item .lbl { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.1rem; }
+    .summary-item .val { font-size: 1.05rem; font-weight: 800; color: var(--white); letter-spacing: -0.3px; }
+    .summary-item .val small { font-size: 0.62rem; font-weight: 600; color: #A9C2D8; }
+    .summary-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .summary-actions .btn-primary, .summary-actions .btn-secondary { padding: 0.5rem 1.1rem; font-size: 0.78rem; }
+    .btn-primary, .btn-secondary {
+      font-family: inherit; font-size: 0.85rem; font-weight: 700; padding: 0.75rem 1.5rem; border-radius: 10px;
+      text-decoration: none; display: inline-block; border: none; cursor: pointer; transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-primary { background: var(--cyan); color: var(--navy); }
+    .btn-secondary { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.3); }
+    .btn-primary:hover, .btn-secondary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .note-box {
+      background: var(--bg-alt); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1rem 1.3rem; margin: 2.5rem 0 0; font-size: 0.82rem; color: var(--text); font-weight: 500; line-height: 1.65;
+    }
+    .note-box strong { color: var(--navy); }
+
+    /* FOOTER */
+    footer { background: var(--navy-deep); border-top: 1px solid var(--border); padding: 2.25rem 6vw; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    footer .logo, footer .logo-x { color: var(--white); }
+    footer .logo-kd { color: var(--cyan); }
+    footer small { font-size: 0.8rem; color: #A9C2D8; font-weight: 500; }
+    .f-links { display: flex; gap: 1.75rem; list-style: none; flex-wrap: wrap; }
+    .f-links a { font-size: 0.8rem; font-weight: 600; color: #A9C2D8; text-decoration: none; transition: color 0.2s; }
+    .f-links a:hover { color: var(--white); }
+
+    /* HAMBURGER */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-menu {
+      display: none; position: fixed; top: 62px; left: 0; right: 0; background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(16px); padding: 1.5rem 6%; border-bottom: 1px solid var(--border);
+      z-index: 99; flex-direction: column; gap: 0.25rem; box-shadow: 0 12px 24px rgba(13,59,102,0.08);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); text-decoration: none; padding: 0.75rem 0; border-bottom: 1px solid var(--border); transition: color 0.2s; }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--navy); }
+
+    /* WHATSAPP FLOAT */
+    .whatsapp-float {
+      position: fixed; bottom: 6.5rem; right: 1.5rem; z-index: 150;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #25D366; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.28); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .whatsapp-float:hover { transform: scale(1.08); box-shadow: 0 8px 26px rgba(0,0,0,0.32); }
+    .whatsapp-float svg { width: 28px; height: 28px; fill: #ffffff; }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 4vw; }
+      .logo-x, .logo-kd { display: none; }
+      .nav-btn { display: none; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      footer { flex-direction: column; text-align: center; }
+      .page-header { padding: 8rem 5% 3rem; }
+      .content-wrap { padding: 2.5rem 4% 4rem; }
+      .calc-row { grid-template-columns: 1fr; gap: 0.5rem; }
+      .row-subtotal { text-align: left; }
+      .summary-box { flex-direction: column; align-items: stretch; bottom: 0.5rem; padding: 0.65rem 0.9rem; }
+      .summary-grid { gap: 0.9rem; }
+      .summary-actions { width: 100%; }
+      .whatsapp-float { width: 48px; height: 48px; bottom: 9.5rem; right: 1rem; }
+      .whatsapp-float svg { width: 24px; height: 24px; }
+      .summary-actions .btn-primary, .summary-actions .btn-secondary { flex: 1; text-align: center; }
+      .steps-nav { gap: 0.5rem; }
+      .step-chip { font-size: 0.72rem; padding: 0.45rem 0.85rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="propuesta.html" class="logo-lockup">
+    <span class="logo">biwov_</span><span class="logo-x">×</span><span class="logo-kd">Kathe Digital</span>
+  </a>
+  <ul>
+    <li><a href="propuesta.html">Planes y Precios</a></li>
+    <li><a href="calculadora.html" class="active">Calculadora</a></li>
+    <li><a href="contrato.html">Contrato y Formulario</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <a href="https://api.whatsapp.com/send/?phone=573133125157&text=Hola%2C+quiero+asesor%C3%ADa+para+armar+mi+plan+de+redes+sociales&type=phone_number&app_absent=0" target="_blank" class="nav-btn">Hablemos_</a>
+    <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="propuesta.html">Planes y Precios</a>
+  <a href="calculadora.html">Calculadora</a>
+  <a href="contrato.html">Contrato y Formulario</a>
+  <a href="https://api.whatsapp.com/send/?phone=573133125157&text=Hola%2C+quiero+asesor%C3%ADa+para+armar+mi+plan+de+redes+sociales&type=phone_number&app_absent=0" target="_blank" style="color:var(--cyan-deep);">Hablemos por WhatsApp</a>
+</div>
+
+<script>
+  const ham = document.getElementById('hamburger');
+  const mob = document.getElementById('mobile-menu');
+  ham.addEventListener('click', () => { ham.classList.toggle('open'); mob.classList.toggle('open'); });
+</script>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="breadcrumb">Biwov_ › Calculadora de Proyecto</div>
+  <h1>Arma tu Proyecto a la Medida<span class="underscore">_</span></h1>
+  <p class="meta">Selecciona solo lo que necesitas y mira el <span>costo total en tiempo real</span>. Precios finales en pesos colombianos (COP).</p>
+</div>
+
+<!-- CONTENIDO -->
+<div class="content-wrap">
+
+  <div class="steps-nav">
+    <a href="propuesta.html" class="step-chip"><span class="num">1</span> Planes y precios</a>
+    <span class="step-chip current"><span class="num">2</span> Calculadora personalizada</span>
+    <a href="contrato.html" class="step-chip"><span class="num">3</span> Contrato y formulario</a>
+  </div>
+
+  <p class="section-lead">Ajusta las cantidades con los botones + / −. El total se actualiza solo, separado entre lo que pagarías cada mes y lo que se paga una única vez.</p>
+
+  <!-- CONTENIDO Y PRODUCCIÓN -->
+  <div class="calc-section">
+    <div class="calc-section-header">
+      <h2>Contenido y producción</h2>
+      <span class="tag">Piezas por mes</span>
+    </div>
+    <div id="group-contenido"></div>
+  </div>
+
+  <!-- GESTIÓN Y ESTRATEGIA -->
+  <div class="calc-section">
+    <div class="calc-section-header">
+      <h2>Gestión y estrategia</h2>
+      <span class="tag">Cargo mensual</span>
+    </div>
+    <div id="group-gestion"></div>
+  </div>
+
+  <!-- PROYECTOS ÚNICOS -->
+  <div class="calc-section">
+    <div class="calc-section-header">
+      <h2>Proyectos de montaje</h2>
+      <span class="tag">Pago único</span>
+    </div>
+    <div id="group-unico"></div>
+  </div>
+
+  <div class="note-box">
+    <strong>Nota:</strong> esta calculadora te da un estimado inmediato. El equipo de Biwov_ confirma contigo el alcance final antes de iniciar el proyecto. Los precios no incluyen IVA ni retenciones (corren por cuenta del cliente si aplican) y son válidos mientras estén publicados en esta página.
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary-box">
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="lbl">Costo mensual estimado</div>
+        <div class="val" id="total-mensual">$0 <small>COP / mes</small></div>
+      </div>
+      <div class="summary-item">
+        <div class="lbl">Pago único estimado</div>
+        <div class="val" id="total-unico">$0 <small>COP</small></div>
+      </div>
+    </div>
+    <div class="summary-actions">
+      <button class="btn-secondary" id="reset-btn" type="button">Restablecer</button>
+      <a class="btn-primary" id="continue-btn" href="contrato.html?plan=Personalizado">Continuar al contrato →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="propuesta.html" class="logo-lockup"><span class="logo">biwov_</span><span class="logo-x">×</span><span class="logo-kd">Kathe Digital</span></a>
+  <small>© 2026 Biwov_. Colombia</small>
+  <ul class="f-links">
+    <li><a href="propuesta.html">Planes y Precios</a></li>
+    <li><a href="calculadora.html">Calculadora</a></li>
+    <li><a href="contrato.html">Contrato y Formulario</a></li>
+    <li><a href="https://api.whatsapp.com/send/?phone=573133125157&text=Hola%2C+quiero+asesor%C3%ADa+para+armar+mi+plan+de+redes+sociales&type=phone_number&app_absent=0" target="_blank">WhatsApp</a></li>
+  </ul>
+</footer>
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://api.whatsapp.com/send/?phone=573133125157&text=Hola%2C+quiero+asesor%C3%ADa+para+armar+mi+plan+de+redes+sociales&type=phone_number&app_absent=0" target="_blank" class="whatsapp-float" aria-label="Escríbenos por WhatsApp">
+  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16.04 2.67C8.85 2.67 3.02 8.5 3.02 15.69c0 2.28.6 4.5 1.73 6.46L2.9 29.33l7.35-1.93a13.02 13.02 0 0 0 5.78 1.36h.01c7.19 0 13.02-5.83 13.02-13.02 0-3.48-1.36-6.75-3.82-9.2a12.93 12.93 0 0 0-9.2-3.87zm0 23.83h-.01a10.8 10.8 0 0 1-5.5-1.51l-.4-.24-4.36 1.14 1.16-4.25-.26-.44a10.78 10.78 0 0 1-1.66-5.76c0-5.96 4.85-10.81 10.82-10.81 2.89 0 5.6 1.13 7.65 3.17a10.74 10.74 0 0 1 3.16 7.65c0 5.96-4.85 10.81-10.6 10.81zm5.93-8.1c-.32-.16-1.9-.94-2.2-1.05-.29-.11-.51-.16-.72.16-.21.32-.83 1.05-1.02 1.26-.19.21-.38.24-.7.08-.32-.16-1.36-.5-2.6-1.6-.96-.86-1.6-1.92-1.79-2.24-.19-.32-.02-.49.14-.65.14-.14.32-.38.48-.56.16-.19.21-.32.32-.54.11-.21.05-.4-.03-.56-.08-.16-.72-1.74-.99-2.38-.26-.62-.53-.54-.72-.55h-.62c-.21 0-.56.08-.85.4-.29.32-1.11 1.08-1.11 2.64 0 1.56 1.14 3.06 1.3 3.27.16.21 2.24 3.42 5.43 4.8.76.33 1.35.52 1.81.67.76.24 1.45.21 2 .13.61-.09 1.9-.78 2.17-1.53.27-.75.27-1.4.19-1.53-.08-.13-.29-.21-.61-.37z"/></svg>
+</a>
+
+<script>
+  const ITEMS = {
+    contenido: [
+      { id: 'img',      name: 'Imagen / pieza estática',                 price: 18000  },
+      { id: 'carrusel', name: 'Carrusel (set de ~5 piezas)',              price: 30000  },
+      { id: 'historia', name: 'Historia (pieza individual)',              price: 15000  },
+      { id: 'video',    name: 'Video completo (grabación + edición)',     price: 180000 },
+      { id: 'edicion',  name: 'Edición de video sola (tú entregas el material)', price: 80000 },
+      { id: 'grabacion',name: 'Grabación sola (sesión de 2 horas, sin edición)', price: 180000 },
+      { id: 'ugc',      name: 'Contenido UGC (pieza, creador externo)',   price: 80000  },
+    ],
+    gestion: [
+      { id: 'subida',    name: 'Subida de contenido',                    price: 200000 },
+      { id: 'copy',      name: 'Copywriting',                            price: 150000 },
+      { id: 'estrategia',name: 'Estrategia de contenido',                price: 200000 },
+      { id: 'asesoria',  name: 'Asesoría y acompañamiento',              price: 150000 },
+      { id: 'informe',   name: 'Informe mensual',                        price: 80000  },
+      { id: 'campbasica',name: 'Campaña publicitaria: aumento de seguidores', price: 100000 },
+      { id: 'campavanz', name: 'Campaña publicitaria: creación de campaña de ventas', price: 350000 },
+    ],
+    unico: [
+      { id: 'redes',   name: 'Creación de redes sociales (IG + FB + TikTok)', price: 180000 },
+      { id: 'optim',   name: 'Optimización de perfiles existentes',           price: 120000 },
+      { id: 'web',     name: 'Página web básica (hosting, dominio 1er año y SEO básico incluidos)', price: 900000 },
+    ],
+  };
+
+  const fmt = n => '$' + Math.round(n).toLocaleString('es-CO');
+
+  function buildGroup(containerId, list) {
+    const container = document.getElementById(containerId);
+    list.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'calc-row';
+      row.innerHTML = `
+        <div class="item-name">${item.name}</div>
+        <div class="item-price">${fmt(item.price)} c/u</div>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" data-action="dec" data-id="${item.id}">−</button>
+          <input type="number" class="qty-input" id="qty-${item.id}" value="0" min="0" step="1">
+          <button type="button" class="qty-btn" data-action="inc" data-id="${item.id}">+</button>
+        </div>
+        <div class="row-subtotal" id="sub-${item.id}">$0</div>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  buildGroup('group-contenido', ITEMS.contenido);
+  buildGroup('group-gestion', ITEMS.gestion);
+  buildGroup('group-unico', ITEMS.unico);
+
+  const ALL_ITEMS = [...ITEMS.contenido, ...ITEMS.gestion, ...ITEMS.unico];
+  const MENSUAL_IDS = new Set([...ITEMS.contenido, ...ITEMS.gestion].map(i => i.id));
+  const UNICO_IDS = new Set(ITEMS.unico.map(i => i.id));
+
+  function getQty(id) {
+    const el = document.getElementById('qty-' + id);
+    const v = parseInt(el.value, 10);
+    return isNaN(v) || v < 0 ? 0 : v;
+  }
+
+  function setQty(id, v) {
+    document.getElementById('qty-' + id).value = Math.max(0, v);
+  }
+
+  function recalc() {
+    let totalMensual = 0, totalUnico = 0;
+    ALL_ITEMS.forEach(item => {
+      const qty = getQty(item.id);
+      const subtotal = qty * item.price;
+      document.getElementById('sub-' + item.id).textContent = fmt(subtotal);
+      if (MENSUAL_IDS.has(item.id)) totalMensual += subtotal;
+      if (UNICO_IDS.has(item.id)) totalUnico += subtotal;
+    });
+    document.getElementById('total-mensual').innerHTML = fmt(totalMensual) + ' <small>COP / mes</small>';
+    document.getElementById('total-unico').innerHTML = fmt(totalUnico) + ' <small>COP</small>';
+
+    const parts = [];
+    ALL_ITEMS.forEach(item => {
+      const qty = getQty(item.id);
+      if (qty > 0) parts.push(`${item.name} x${qty}`);
+    });
+    const summary = parts.length ? parts.join(' · ') : 'Sin selección';
+    const url = new URL(document.getElementById('continue-btn').href, window.location.href);
+    url.searchParams.set('plan', 'Personalizado');
+    url.searchParams.set('mensual', totalMensual);
+    url.searchParams.set('unico', totalUnico);
+    url.searchParams.set('detalle', summary);
+    document.getElementById('continue-btn').href = url.toString();
+  }
+
+  document.body.addEventListener('click', e => {
+    const btn = e.target.closest('.qty-btn');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    const delta = btn.dataset.action === 'inc' ? 1 : -1;
+    setQty(id, getQty(id) + delta);
+    recalc();
+  });
+
+  document.body.addEventListener('input', e => {
+    if (e.target.classList.contains('qty-input')) recalc();
+  });
+
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    ALL_ITEMS.forEach(item => setQty(item.id, 0));
+    recalc();
+  });
+
+  recalc();
+</script>
+
+</body>
+</html>
