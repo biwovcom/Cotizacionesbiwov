@@ -276,8 +276,13 @@
     .unique-plan {
       margin-top: 1.5rem;
       background: var(--bg-alt);
-      border: 1px dashed var(--border-cyan);
+      border: 1px solid var(--border-cyan);
       border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(13,59,102,0.08);
+    }
+    .unique-plan .plan-banner { height: 170px; }
+    .unique-plan-body {
       padding: 2rem 2.25rem;
       display: grid;
       grid-template-columns: 1.3fr 1fr;
@@ -405,7 +410,7 @@
 
     @media (max-width: 900px) {
       .plans-grid { grid-template-columns: 1fr; }
-      .unique-plan { grid-template-columns: 1fr; }
+      .unique-plan-body { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
@@ -417,7 +422,7 @@
       footer { flex-direction: column; text-align: center; }
       .page-header { padding: 8rem 5% 3rem; }
       .content-wrap { padding: 2.5rem 4% 4rem; }
-      .unique-plan { padding: 1.5rem; }
+      .unique-plan-body { padding: 1.5rem; }
       .up-list li { flex-direction: column; gap: 0.15rem; }
       .plan-banner { height: 160px; }
       .plan-card-body { padding: 1.5rem 1.25rem 1.75rem; }
@@ -531,7 +536,6 @@
         <div class="plan-name">Plan Elite</div>
         <div class="plan-tagline">Gestión completa: redes, web y publicidad, todo incluido.</div>
         <div class="plan-price"><span class="amount">$1.690.000</span><span class="period">COP / mes</span></div>
-        <div class="setup-note"><b>+ $1.080.000</b> pago único el mes 1 (creación/optimización de redes + página web básica con hosting, dominio y SEO básico)</div>
         <ul class="plan-list">
           <li>8 videos al mes (2 por semana, en 3 días de grabación)</li>
           <li>4 carruseles al mes</li>
@@ -549,23 +553,25 @@
 
   </div>
 
-  <!-- PLAN DE PAGO ÚNICO -->
+  <!-- PLAN LANZAMIENTO DIGITAL (PAGO ÚNICO) -->
   <div class="unique-plan">
-    <div>
-      <div class="up-label">Sin mensualidad · Sin permanencia</div>
-      <h3>Plan de Pago Único — Montaje Inicial<span class="underscore">_</span></h3>
-      <p>Ideal si todavía no necesitas gestión mensual y solo quieres dejar tus redes y tu web listas y funcionando.</p>
-      <ul class="up-list">
-        <li>Creación de redes sociales (Instagram, Facebook y TikTok) <b>$180.000</b></li>
-        <li>— o si ya tienes redes: optimización de perfiles existentes <b>$120.000</b></li>
-        <li>Página web básica, incluye hosting, dominio (1er año) y SEO básico <b>$900.000</b></li>
-      </ul>
-      <p class="up-note"><b>¿Qué es el SEO?</b> Son ajustes simples en tu página (títulos, descripciones y palabras clave de tu negocio) para que aparezca más fácil cuando alguien te busca en Google.</p>
-    </div>
-    <div class="up-right">
-      <div class="range">$1.020.000 – $1.080.000</div>
-      <div class="range-note">Pago único, COP</div>
-      <a href="contrato.html?plan=Pago%20%C3%9Anico" class="plan-cta">Quiero este proyecto_</a>
+    <img src="BW4.png" alt="Plan Lanzamiento Digital — Despliegue estratégico de alto rendimiento" class="plan-banner">
+    <div class="unique-plan-body">
+      <div>
+        <div class="up-label">Sin mensualidad · Sin permanencia</div>
+        <h3>Plan Lanzamiento Digital<span class="underscore">_</span></h3>
+        <p>Ideal si todavía no necesitas gestión mensual y solo quieres dejar tus redes y tu web listas y funcionando.</p>
+        <ul class="up-list">
+          <li>Creación o ajuste de tus redes sociales (Instagram, Facebook y TikTok) <b>$180.000</b></li>
+          <li>Página web básica, incluye hosting, dominio (1er año) y SEO básico <b>$900.000</b></li>
+        </ul>
+        <p class="up-note"><b>¿Qué es el SEO?</b> Son ajustes simples en tu página (títulos, descripciones y palabras clave de tu negocio) para que aparezca más fácil cuando alguien te busca en Google.</p>
+      </div>
+      <div class="up-right">
+        <div class="range">$1.080.000</div>
+        <div class="range-note">Pago único, COP</div>
+        <a href="contrato.html?plan=Plan%20Lanzamiento%20Digital" class="plan-cta">Quiero este plan_</a>
+      </div>
     </div>
   </div>
 

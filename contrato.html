@@ -423,7 +423,7 @@
             <option value="Plan Inicial">Plan Inicial — $750.000 COP/mes</option>
             <option value="Plan Crecimiento">Plan Crecimiento — $1.420.000 COP/mes</option>
             <option value="Plan Elite">Plan Elite — $1.690.000 COP/mes</option>
-            <option value="Pago Único">Pago Único — Montaje inicial</option>
+            <option value="Plan Lanzamiento Digital">Plan Lanzamiento Digital — $1.080.000 (pago único)</option>
             <option value="Personalizado">Personalizado (calculadora)</option>
           </select>
         </div>
@@ -495,8 +495,8 @@
 -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-  const SUPABASE_URL = 'TU_SUPABASE_URL_AQUI';
-  const SUPABASE_ANON_KEY = 'TU_SUPABASE_ANON_KEY_AQUI';
+  const SUPABASE_URL = 'https://ofsgsjnpsvxfkxymdtrc.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_5-tukslzNPQ4-5XJ3QrVyg_4GznAU0Z';
   const SUPABASE_TABLE = 'solicitudes_cotizacion';
 
   let supabaseClient = null;
@@ -509,6 +509,7 @@
     'Plan Inicial': 'https://pay.hotmart.com/S106690825B?bid=1783717965547',
     'Plan Crecimiento': 'https://pay.hotmart.com/F106692660M?bid=1783718265466',
     'Plan Elite': 'https://pay.hotmart.com/L106692804C?bid=1783718721666',
+    'Plan Lanzamiento Digital': 'https://pay.hotmart.com/X106743014M',
   };
 
   // Indicativos de país para el teléfono / WhatsApp
