@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruta de Construcción de Ecosistema Digital — Biwov_</title>
+  <meta name="description" content="Descubre en qué etapa está tu negocio y qué necesitas construir, mes a mes, hasta tener tu ecosistema digital completo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,100..900;1,100..900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --navy:      #0D3B66;
+      --navy-deep: #082C4E;
+      --blue:      #1B6FA8;
+      --cyan:      #45C8DC;
+      --cyan-deep: #0C8599;
+      --bg:        #FFFFFF;
+      --bg-alt:    #F3F9FC;
+      --text:      #16324F;
+      --muted:     #64748B;
+      --border:    #E1E9F0;
+      --border-cyan: rgba(69,200,220,0.4);
+      --white:     #FFFFFF;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .underscore { color: var(--cyan); }
+
+    .logo-lockup { display: flex; align-items: baseline; gap: 0.5rem; text-decoration: none; }
+    .logo { font-family: 'MuseoModerno', sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--navy); letter-spacing: -0.5px; line-height: 1; }
+    .logo-x { color: var(--muted); font-size: 0.9rem; font-weight: 400; }
+    .logo-kd { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--cyan-deep); letter-spacing: -0.2px; }
+
+    /* NAV */
+    nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 6vw; background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav ul { list-style: none; display: flex; gap: 1.75rem; }
+    nav ul a { color: var(--muted); text-decoration: none; font-size: 0.86rem; font-weight: 600; letter-spacing: 0.01em; transition: color 0.2s; }
+    nav ul a:hover { color: var(--navy); }
+    nav ul a.active { color: var(--navy); }
+
+    .nav-btn {
+      background: var(--navy); color: var(--white); font-family: inherit; font-size: 0.875rem; font-weight: 700;
+      padding: 0.5rem 1.25rem; border-radius: 8px; border: none; cursor: pointer; text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s; display: inline-block;
+    }
+    .nav-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* HEADER */
+    .page-header { padding: 9.5rem 6vw 3.5rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; background: var(--bg-alt); }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 55% 60% at 85% 0%, rgba(69,200,220,0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-header-inner { max-width: 780px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+    .eyebrow {
+      display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--cyan-deep); background: rgba(69,200,220,0.1); border: 1px solid var(--border-cyan);
+      padding: 0.4rem 1rem; border-radius: 99px; margin-bottom: 1.25rem;
+    }
+    .page-header h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; color: var(--navy); letter-spacing: -1.2px; line-height: 1.15; margin-bottom: 1rem; }
+    .page-header p { font-size: 0.95rem; color: var(--muted); font-weight: 500; }
+
+    /* CONTENT */
+    .content-wrap { max-width: 1000px; margin: 0 auto; padding: 4rem 6vw 6rem; }
+
+    .section-lead { max-width: 680px; margin: 0 auto 2.5rem; text-align: center; }
+    .section-lead h2 { font-size: 1.4rem; font-weight: 800; color: var(--navy); margin-bottom: 0.6rem; letter-spacing: -0.5px; }
+    .section-lead p { font-size: 0.92rem; color: var(--muted); font-weight: 500; }
+
+    /* STAGE SELECTOR */
+    .stages-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.9rem; margin-bottom: 3rem; }
+    .stage-card {
+      background: var(--white); border: 2px solid var(--border); border-radius: 14px; padding: 1.25rem 1.1rem;
+      cursor: pointer; transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s; text-align: left;
+    }
+    .stage-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(13,59,102,0.08); }
+    .stage-card.selected { border-color: var(--cyan); background: rgba(69,200,220,0.06); box-shadow: 0 6px 20px rgba(69,200,220,0.18); }
+    .stage-card .stage-num {
+      width: 30px; height: 30px; border-radius: 50%; background: var(--navy); color: var(--white);
+      display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; margin-bottom: 0.75rem;
+    }
+    .stage-card.selected .stage-num { background: var(--cyan); color: var(--navy); }
+    .stage-card h3 { font-size: 0.86rem; font-weight: 800; color: var(--navy); margin-bottom: 0.4rem; line-height: 1.3; }
+    .stage-card p { font-size: 0.76rem; color: var(--muted); font-weight: 500; line-height: 1.45; }
+
+    /* ROADMAP RESULT */
+    .roadmap-result { display: none; }
+    .roadmap-result.show { display: block; animation: fadeIn 0.35s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .roadmap-summary {
+      background: var(--navy); border-radius: 18px; padding: 2rem 2.25rem; color: var(--white);
+      display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .roadmap-summary h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 0.4rem; }
+    .roadmap-summary p { font-size: 0.85rem; color: #B9D3E5; font-weight: 500; max-width: 480px; }
+    .roadmap-price-box { text-align: center; flex-shrink: 0; }
+    .roadmap-price-box .price { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
+    .roadmap-price-box .duration { font-size: 0.78rem; color: var(--cyan); font-weight: 700; margin-bottom: 0.9rem; }
+    .roadmap-price-box .price-note { font-size: 0.72rem; color: #B9D3E5; font-weight: 600; margin-top: 0.2rem; }
+
+    /* PAYMENT BOX */
+    .payment-box {
+      background: var(--bg-alt); border: 1px solid var(--border-cyan); border-radius: 16px;
+      padding: 1.5rem 1.75rem; margin-bottom: 2.5rem; display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;
+    }
+    .payment-box .p-icon { font-size: 1.4rem; }
+    .payment-box h4 { font-size: 0.92rem; font-weight: 800; color: var(--navy); margin-bottom: 0.4rem; }
+    .payment-box .p-lines { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.5rem; }
+    .payment-box .p-line { font-size: 0.85rem; color: var(--text); font-weight: 600; }
+    .payment-box .p-line b { color: var(--cyan-deep); }
+    .payment-box .p-note { font-size: 0.78rem; color: var(--muted); font-weight: 500; line-height: 1.5; }
+
+    /* MINI FUNNEL INDICATOR */
+    .mini-funnel { display: flex; gap: 0.4rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
+    .mini-funnel .mf-stage {
+      display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.9rem; border-radius: 99px;
+      font-size: 0.76rem; font-weight: 700; background: var(--bg-alt); color: var(--muted); border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .mini-funnel .mf-stage.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+    /* TIMELINE */
+    .timeline { display: flex; flex-direction: column; gap: 1rem; }
+    .month-card {
+      display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; align-items: flex-start;
+      background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem 1.75rem;
+      box-shadow: 0 2px 16px rgba(13,59,102,0.05);
+    }
+    .month-card .m-num {
+      width: 46px; height: 46px; min-width: 46px; border-radius: 12px; background: rgba(69,200,220,0.12);
+      border: 1px solid var(--border-cyan); color: var(--navy); font-weight: 800; font-size: 0.8rem;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.1;
+    }
+    .month-card .m-num small { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--cyan-deep); }
+    .month-card h4 { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 0.4rem; }
+    .month-card p { font-size: 0.87rem; color: var(--text); font-weight: 500; line-height: 1.55; margin-bottom: 0.6rem; }
+    .month-card .m-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .month-card .m-tag {
+      font-size: 0.72rem; font-weight: 700; color: var(--cyan-deep); background: rgba(69,200,220,0.08);
+      padding: 0.25rem 0.65rem; border-radius: 99px;
+    }
+
+    .roadmap-cta { text-align: center; margin-top: 2.5rem; }
+    .roadmap-cta .btn-primary {
+      background: var(--navy); color: var(--white); font-family: inherit; font-size: 0.92rem; font-weight: 700;
+      padding: 0.9rem 2.25rem; border-radius: 10px; text-decoration: none; display: inline-block;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .roadmap-cta .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .roadmap-cta p { font-size: 0.8rem; color: var(--muted); margin-top: 0.9rem; }
+
+    .stage4-note {
+      display: none; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 16px;
+      padding: 2rem; text-align: center;
+    }
+    .stage4-note.show { display: block; animation: fadeIn 0.35s ease; }
+    .stage4-note h3 { font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 0.7rem; }
+    .stage4-note p { font-size: 0.88rem; color: var(--muted); font-weight: 500; margin-bottom: 1.5rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+
+    /* FOOTER */
+    footer { background: var(--navy-deep); border-top: 1px solid var(--border); padding: 2.25rem 6vw; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    footer .logo, footer .logo-x { color: var(--white); }
+    footer .logo-kd { color: var(--cyan); }
+    footer small { font-size: 0.8rem; color: #A9C2D8; font-weight: 500; }
+    .f-links { display: flex; gap: 1.75rem; list-style: none; flex-wrap: wrap; }
+    .f-links a { font-size: 0.8rem; font-weight: 600; color: #A9C2D8; text-decoration: none; transition: color 0.2s; }
+    .f-links a:hover { color: var(--white); }
+
+    /* HAMBURGER */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-menu {
+      display: none; position: fixed; top: 62px; left: 0; right: 0; background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(16px); padding: 1.5rem 6%; border-bottom: 1px solid var(--border);
+      z-index: 99; flex-direction: column; gap: 0.25rem; box-shadow: 0 12px 24px rgba(13,59,102,0.08);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); text-decoration: none; padding: 0.75rem 0; border-bottom: 1px solid var(--border); transition: color 0.2s; }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--navy); }
+
+    /* WHATSAPP FLOAT */
+    .whatsapp-float {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 150;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #25D366; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.28); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .whatsapp-float:hover { transform: scale(1.08); box-shadow: 0 8px 26px rgba(0,0,0,0.32); }
+    .whatsapp-float svg { width: 28px; height: 28px; fill: #ffffff; }
+
+    @media (max-width: 900px) {
+      .stages-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 4vw; }
+      .logo-x, .logo-kd { display: none; }
+      .nav-btn { display: none; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      footer { flex-direction: column; text-align: center; }
+      .page-header { padding: 8.5rem 5% 3rem; }
+      .content-wrap { padding: 2.5rem 4% 4rem; }
+      .stages-grid { grid-template-columns: repeat(2, 1fr); }
+      .roadmap-summary { flex-direction: column; text-align: center; }
+      .month-card { grid-template-columns: 1fr; text-align: left; }
+      .month-card .m-num { flex-direction: row; gap: 0.4rem; width: fit-content; padding: 0.3rem 0.7rem; height: auto; border-radius: 8px; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo-lockup">
+    <span class="logo">biwov_</span><span class="logo-x">×</span><span class="logo-kd">Kathe Digital</span>
+  </a>
+  <ul>
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="ruta.html" class="active">Ruta</a></li>
+    <li><a href="propuesta.html">Planes y Precios</a></li>
+    <li><a href="calculadora.html">Calculadora</a></li>
+    <li><a href="contrato.html">Contrato</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <a href="https://api.whatsapp.com/send/?phone=573133125157&text=Hola%2C+quiero+saber+en+qu%C3%A9+etapa+est%C3%A1+mi+negocio&type=phone_number&app_absent=0" target="_blank" class="nav-btn">Hablemos_</a>
+    <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">Inicio</a>
+  <a href="ruta.html">Ruta</a>
+  <a href="propuesta.html">Planes y Precios</a>
+  <a href="calculadora.html">Calculadora</a>
+  <a href="contrato.html">Contrato y Formulario</a>
+  <a href="https://api.whatsapp.com/send/?phone=573133125157&text=Hola%2C+quiero+saber+en+qu%C3%A9+etapa+est%C3%A1+mi+negocio&type=phone_number&app_absent=0" target="_blank" style="color:var(--cyan-deep);">Hablemos por WhatsApp</a>
+</div>
+
+<script>
+  const ham = document.getElementById('hamburger');
+  const mob = document.getElementById('mobile-menu');
+  ham.addEventListener('click', () => { ham.classList.toggle('open'); mob.classList.toggle('open'); });
+</script>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <span class="eyebrow">Diagnóstico + Ruta_</span>
+    <h1>Tu ruta hacia el ecosistema digital completo<span class="underscore">_</span></h1>
+    <p>Elige en qué etapa está tu negocio hoy y te mostramos exactamente qué se construye, mes a mes, hasta tener todo tu ecosistema funcionando.</p>
+  </div>
+</div>
+
+<!-- CONTENIDO -->
+<div class="content-wrap">
+
+  <div class="section-lead">
+    <h2>1. ¿En qué etapa está tu negocio?<span class="underscore">_</span></h2>
+    <p>Selecciona la que más se parezca a tu situación actual.</p>
+  </div>
+
+  <div class="stages-grid" id="stages-grid"></div>
+
+  <!-- RESULTADO ETAPAS 0-3 -->
+  <div class="roadmap-result" id="roadmap-result">
+    <div class="section-lead">
+      <h2>2. Tu ruta recomendada<span class="underscore">_</span></h2>
+      <p>Así se construye tu ecosistema digital, paso a paso, desde donde estás hoy.</p>
+    </div>
+
+    <div class="roadmap-summary">
+      <div>
+        <h3 id="rs-title"></h3>
+        <p id="rs-desc"></p>
+      </div>
+      <div class="roadmap-price-box">
+        <div class="duration" id="rs-duration"></div>
+        <div class="price" id="rs-price"></div>
+        <div class="price-note" id="rs-price-note"></div>
+      </div>
+    </div>
+
+    <div class="payment-box">
+      <span class="p-icon">💳</span>
+      <div>
+        <h4>Cómo se paga</h4>
+        <div class="p-lines" id="payment-lines"></div>
+        <p class="p-note">Pago anticipado, dentro de los primeros 5 días de cada mes — igual que en los planes mensuales. Al inscribirte en una Ruta te comprometes a los meses completos del programa, ya que cada mes se construye sobre el anterior.</p>
+      </div>
+    </div>
+
+    <div class="mini-funnel" id="mini-funnel"></div>
+
+    <div class="timeline" id="timeline"></div>
+
+    <div class="roadmap-cta">
+      <a href="#" class="btn-primary" id="roadmap-cta-btn">Quiero esta ruta_</a>
+      <p>El equipo de Biwov_ confirma contigo el alcance exacto antes de iniciar.</p>
+    </div>
+  </div>
+
+  <!-- RESULTADO ETAPA 4 -->
+  <div class="stage4-note" id="stage4-note">
+    <h3>¡Tu ecosistema ya está funcionando!<span class="underscore">_</span></h3>
+    <p>No necesitas la ruta de construcción — lo que sigue es gestión continua y optimización. Te recomendamos el Plan Elite, con gestión mensual completa de contenido, publicidad y estrategia.</p>
+    <a href="propuesta.html" class="btn-primary" style="background:var(--navy); color:var(--white); font-family:inherit; font-size:0.92rem; font-weight:700; padding:0.9rem 2.25rem; border-radius:10px; text-decoration:none; display:inline-block;">Ver Plan Elite</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="index.html" class="logo-lockup"><span class="logo">biwov_</span><span class="logo-x">×</span><span class="logo-kd">Kathe Digital</span></a>
+  <small>© 2026 Biwov_. Colombia</small>
+  <ul class="f-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="ruta.html">Ruta</a></li>
+    <li><a href="propuesta.html">Planes y Precios</a></li>
+    <li><a href="calculadora.html">Calculadora</a></li>
+    <li><a href="contrato.html">Contrato y Formulario</a></li>
+    <li><a href="https://api.whatsapp.com/send/?phone=573133125157&text=Hola%2C+quiero+saber+en+qu%C3%A9+etapa+est%C3%A1+mi+negocio&type=phone_number&app_absent=0" target="_blank">WhatsApp</a></li>
+  </ul>
+</footer>
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://api.whatsapp.com/send/?phone=573133125157&text=Hola%2C+quiero+saber+en+qu%C3%A9+etapa+est%C3%A1+mi+negocio&type=phone_number&app_absent=0" target="_blank" class="whatsapp-float" aria-label="Escríbenos por WhatsApp">
+  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16.04 2.67C8.85 2.67 3.02 8.5 3.02 15.69c0 2.28.6 4.5 1.73 6.46L2.9 29.33l7.35-1.93a13.02 13.02 0 0 0 5.78 1.36h.01c7.19 0 13.02-5.83 13.02-13.02 0-3.48-1.36-6.75-3.82-9.2a12.93 12.93 0 0 0-9.2-3.87zm0 23.83h-.01a10.8 10.8 0 0 1-5.5-1.51l-.4-.24-4.36 1.14 1.16-4.25-.26-.44a10.78 10.78 0 0 1-1.66-5.76c0-5.96 4.85-10.81 10.82-10.81 2.89 0 5.6 1.13 7.65 3.17a10.74 10.74 0 0 1 3.16 7.65c0 5.96-4.85 10.81-10.6 10.81zm5.93-8.1c-.32-.16-1.9-.94-2.2-1.05-.29-.11-.51-.16-.72.16-.21.32-.83 1.05-1.02 1.26-.19.21-.38.24-.7.08-.32-.16-1.36-.5-2.6-1.6-.96-.86-1.6-1.92-1.79-2.24-.19-.32-.02-.49.14-.65.14-.14.32-.38.48-.56.16-.19.21-.32.32-.54.11-.21.05-.4-.03-.56-.08-.16-.72-1.74-.99-2.38-.26-.62-.53-.54-.72-.55h-.62c-.21 0-.56.08-.85.4-.29.32-1.11 1.08-1.11 2.64 0 1.56 1.14 3.06 1.3 3.27.16.21 2.24 3.42 5.43 4.8.76.33 1.35.52 1.81.67.76.24 1.45.21 2 .13.61-.09 1.9-.78 2.17-1.53.27-.75.27-1.4.19-1.53-.08-.13-.29-.21-.61-.37z"/></svg>
+</a>
+
+<script>
+  const FUNNEL_STAGES = ['Marketing', 'Ventas', 'Cierre', 'Onboarding', 'Entrega', 'Posventa'];
+
+  const STAGES = [
+    {
+      id: 0,
+      name: 'Arranque',
+      diag: 'No tienes redes activas o no tienes página web. Todo tu negocio funciona de boca en boca.',
+      duration: '6 meses',
+      price: '$4.830.000',
+      setupFee: 1080000,
+      monthlyFee: 750000,
+      monthlyMonths: 5,
+      summary: 'Partimos desde cero: montamos tus redes, tu web, y construimos todo el embudo hasta la fidelización.',
+      months: [
+        { title: 'Fundamentos', desc: 'Creación de redes sociales (IG, FB, TikTok) y página web básica con SEO. La base sobre la que se construye todo lo demás.', tags: ['Marketing'] },
+        { title: 'Contenido base', desc: 'Primeras piezas de contenido, calendario de publicación y copywriting para empezar a construir tu presencia.', tags: ['Marketing'] },
+        { title: 'Atracción', desc: 'Campaña publicitaria de aumento de seguidores + más volumen de contenido para ampliar tu alcance.', tags: ['Marketing'] },
+        { title: 'Captación de leads', desc: 'Lead magnet, formulario de contacto y estrategia para convertir visitas en contactos reales.', tags: ['Ventas'] },
+        { title: 'Cierre', desc: 'Campaña de creación de ventas y secuencia de seguimiento para convertir contactos en clientes.', tags: ['Cierre'] },
+        { title: 'Onboarding y posventa', desc: 'Bienvenida automatizada para clientes nuevos, solicitud de testimonios/referidos y tu primer informe de resultados.', tags: ['Onboarding', 'Entrega', 'Posventa'] },
+      ],
+    },
+    {
+      id: 1,
+      name: 'Presencia sin estrategia',
+      diag: 'Tienes redes y/o web, pero publicas sin un plan claro y casi no generas contactos nuevos.',
+      duration: '5 meses',
+      price: '$3.750.000',
+      setupFee: null,
+      monthlyFee: 750000,
+      monthlyMonths: 5,
+      summary: 'Ya tienes las bases — el trabajo es darle consistencia, atraer más gente y empezar a convertir.',
+      months: [
+        { title: 'Contenido base', desc: 'Piezas de contenido, calendario de publicación y copywriting con estrategia clara.', tags: ['Marketing'] },
+        { title: 'Atracción', desc: 'Campaña publicitaria de aumento de seguidores + más volumen de contenido.', tags: ['Marketing'] },
+        { title: 'Captación de leads', desc: 'Lead magnet, formulario de contacto y estrategia de conversión.', tags: ['Ventas'] },
+        { title: 'Cierre', desc: 'Campaña de creación de ventas y secuencia de seguimiento.', tags: ['Cierre'] },
+        { title: 'Onboarding y posventa', desc: 'Bienvenida automatizada, solicitud de testimonios/referidos e informe de resultados.', tags: ['Onboarding', 'Entrega', 'Posventa'] },
+      ],
+    },
+    {
+      id: 2,
+      name: 'Generación de demanda',
+      diag: 'Publicas seguido y tienes algo de tráfico, pero no conviertes ese interés en ventas de forma sistemática.',
+      duration: '3 meses',
+      price: '$2.250.000',
+      setupFee: null,
+      monthlyFee: 750000,
+      monthlyMonths: 3,
+      summary: 'Ya atraes gente — falta capturar sus datos y llevarlos hasta la compra.',
+      months: [
+        { title: 'Captación de leads', desc: 'Lead magnet, formulario de contacto y estrategia para convertir tráfico en contactos reales.', tags: ['Ventas'] },
+        { title: 'Cierre', desc: 'Campaña de creación de ventas y secuencia de seguimiento para cerrar clientes.', tags: ['Cierre'] },
+        { title: 'Onboarding y posventa', desc: 'Bienvenida automatizada, solicitud de testimonios/referidos e informe de resultados.', tags: ['Onboarding', 'Entrega', 'Posventa'] },
+      ],
+    },
+    {
+      id: 3,
+      name: 'Conversión sin retención',
+      diag: 'Ya vendes, pero el proceso de bienvenida es manual y no tienes forma de fidelizar o pedir referidos.',
+      duration: '2 meses',
+      price: '$1.500.000',
+      setupFee: null,
+      monthlyFee: 750000,
+      monthlyMonths: 2,
+      summary: 'Ya vendes bien — el trabajo es que cada cliente tenga una gran primera experiencia y vuelva a comprarte.',
+      months: [
+        { title: 'Onboarding automatizado', desc: 'Formulario de bienvenida, calendario y portal o acceso para que cada cliente nuevo empiece bien, sin depender de ti.', tags: ['Onboarding'] },
+        { title: 'Posventa y remarketing', desc: 'Sistema de solicitud de testimonios y referidos, más una estrategia de remarketing para que tus clientes vuelvan a comprar.', tags: ['Entrega', 'Posventa'] },
+      ],
+    },
+    {
+      id: 4,
+      name: 'Ecosistema completo',
+      diag: 'Todo el embudo funciona: atraes, conviertes, entregas y fidelizas. Ahora se trata de optimizar y escalar.',
+      duration: null,
+      price: null,
+    },
+  ];
+
+  const stagesGrid = document.getElementById('stages-grid');
+  STAGES.forEach(stage => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'stage-card';
+    card.dataset.id = stage.id;
+    card.innerHTML = `
+      <div class="stage-num">${stage.id}</div>
+      <h3>${stage.name}</h3>
+      <p>${stage.diag}</p>
+    `;
+    card.addEventListener('click', () => selectStage(stage.id));
+    stagesGrid.appendChild(card);
+  });
+
+  const roadmapResult = document.getElementById('roadmap-result');
+  const stage4Note = document.getElementById('stage4-note');
+
+  function selectStage(id) {
+    document.querySelectorAll('.stage-card').forEach(c => c.classList.toggle('selected', Number(c.dataset.id) === id));
+
+    const stage = STAGES.find(s => s.id === id);
+
+    if (id === 4) {
+      roadmapResult.classList.remove('show');
+      stage4Note.classList.add('show');
+      stage4Note.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return;
+    }
+    stage4Note.classList.remove('show');
+
+    const fmt = n => '$' + n.toLocaleString('es-CO');
+
+    document.getElementById('rs-title').textContent = `Ruta desde Etapa ${stage.id} — ${stage.name}`;
+    document.getElementById('rs-desc').textContent = stage.summary;
+    document.getElementById('rs-duration').textContent = stage.duration;
+    document.getElementById('rs-price').textContent = stage.price;
+    document.getElementById('rs-price-note').textContent = 'Valor total del programa completo';
+
+    // Desglose de pago: mes 1 (montaje, si aplica) + meses de acompañamiento mensual
+    const paymentLines = document.getElementById('payment-lines');
+    paymentLines.innerHTML = '';
+    if (stage.setupFee) {
+      const l1 = document.createElement('div');
+      l1.className = 'p-line';
+      l1.innerHTML = `Mes 1 — Montaje: <b>${fmt(stage.setupFee)}</b> (50% al iniciar + 50% contra entrega)`;
+      paymentLines.appendChild(l1);
+      const l2 = document.createElement('div');
+      l2.className = 'p-line';
+      l2.innerHTML = `Meses 2 a ${stage.months.length} — Acompañamiento: <b>${fmt(stage.monthlyFee)}/mes</b>`;
+      paymentLines.appendChild(l2);
+    } else {
+      const l1 = document.createElement('div');
+      l1.className = 'p-line';
+      l1.innerHTML = `${stage.monthlyMonths} meses de acompañamiento: <b>${fmt(stage.monthlyFee)}/mes</b>`;
+      paymentLines.appendChild(l1);
+    }
+
+    // Mini funnel: activa acumulativamente las etapas del embudo que toca esta ruta
+    const activeStages = new Set();
+    stage.months.forEach(m => m.tags.forEach(t => activeStages.add(t)));
+    const mf = document.getElementById('mini-funnel');
+    mf.innerHTML = '';
+    FUNNEL_STAGES.forEach(fs => {
+      const el = document.createElement('span');
+      el.className = 'mf-stage' + (activeStages.has(fs) ? ' active' : '');
+      el.textContent = fs;
+      mf.appendChild(el);
+    });
+
+    const timeline = document.getElementById('timeline');
+    timeline.innerHTML = '';
+    stage.months.forEach((m, i) => {
+      const card = document.createElement('div');
+      card.className = 'month-card';
+      card.innerHTML = `
+        <div class="m-num"><small>Mes</small>${i + 1}</div>
+        <div>
+          <h4>${m.title}</h4>
+          <p>${m.desc}</p>
+          <div class="m-tags">${m.tags.map(t => `<span class="m-tag">${t}</span>`).join('')}</div>
+        </div>
+      `;
+      timeline.appendChild(card);
+    });
+
+    document.getElementById('roadmap-cta-btn').href = `contrato.html?plan=${encodeURIComponent('Ruta Etapa ' + stage.id)}`;
+
+    roadmapResult.classList.add('show');
+    roadmapResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
+
+</body>
+</html>
